@@ -11,10 +11,20 @@ var Oscillation = function() {
   this.t = 0; // drawing time (not changed by user)
   this.x = 0; // drawing x pos
   this.y = 0; // drawing y pos
+  this.lastVelX = 0;
+  this.lastVelY = 0;
 
   this.drawing = true;
 
+  this.popup = window.open('', 'popup', 'width=300, height=300');
+  this.popup.document.write('<head><title>Velocity Domain</title></head><body><canvas id="canvas2"></canvas></body>');
+
   this.context = document.getElementById('canvas').getContext('2d');
+  this.popupContext = this.popup.document.getElementById('canvas2').getContext('2d');
+  this.popupContext.canvas.width = 300;
+  this.popupContext.canvas.height = 300;
+  this.popupContext.translate(150, 150);
+
   var self = this;
   var timer;
   this.draw = function() {
@@ -28,9 +38,18 @@ var Oscillation = function() {
     self.context.stroke();
     self.context.closePath();
 
+    self.popupContext.beginPath();
+    self.popupContext.strokeStyle = 'rgba(48,48,48,.5)';
+    self.popupContext.moveTo(self.lastVelX, self.lastVelY);
+    self.popupContext.lineTo(x, y);
+    self.popupContext.stroke();
+    self.popupContext.closePath();
+
     self.t += self.dt;
     self.x += x;
     self.y += y;
+    self.lastVelX = x;
+    self.lastVelY = y;
 
     timer = setTimeout(self.draw, self.dt);
   }
@@ -45,6 +64,12 @@ var Oscillation = function() {
     this.context.translate(this.context.canvas.width / -2, this.context.canvas.height / -2);
     this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     this.context.translate(this.context.canvas.width / 2, this.context.canvas.height / 2);
+
+    this.popupContext.translate(this.popupContext.canvas.width / -2, this.popupContext.canvas.height / -2);
+    this.popupContext.clearRect(0, 0, this.popupContext.canvas.width, this.popupContext.canvas.height);
+    this.popupContext.translate(this.popupContext.canvas.width / 2, this.popupContext.canvas.height / 2);
+    this.popupContext.moveTo(0, 0);
+
     this.t = 0;
     this.x = 0;
     this.y = 0;
