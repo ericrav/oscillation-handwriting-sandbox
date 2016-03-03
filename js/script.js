@@ -62,7 +62,7 @@ $(document).ready(function(){
   gui.add(osc, 'vFreq', -100, 100).step(0.01);
   gui.add(osc, 'hPhase', -100, 100).step(0.01);
   gui.add(osc, 'vPhase', -100, 100).step(0.01);
-  gui.add(osc, 'hSweep', -100, 100).step(0.01);
+  gui.add(osc, 'hSweep', $(window).width() / -2, $(window).height() / 2).step(0.01);
   gui.add(osc, 'dt', 1, 1000);  
   gui.add(osc, 'clearDrawing');  
 });
