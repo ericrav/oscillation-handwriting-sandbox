@@ -54,6 +54,21 @@ var Oscillation = function() {
     timer = setTimeout(self.draw, self.dt);
   }
 
+  this.randomize = function() {
+    this.hVel   = (Math.random() * 200) - 100;
+    this.vVel   = (Math.random() * 200) - 100;
+    this.hFreq  = (Math.random() * 200) - 100;
+    this.vFreq  = (Math.random() * 200) - 100;
+    this.hPhase = (Math.random() * 200) - 100;
+    this.vPhase = (Math.random() * 200) - 100;
+    this.hSweep = (Math.random() * 100) - 50;
+    // Iterate over all controllers
+    for (var i in gui.__controllers) {
+      gui.__controllers[i].updateDisplay();
+    }
+    this.clearDrawing();
+  }
+
   this.size = function(width, height) {
     this.context.canvas.width = width;
     this.context.canvas.height = height;
@@ -85,7 +100,7 @@ var Oscillation = function() {
 
 }
 
-var osc;
+var osc, gui;
 var AlwaysUpdate = function() {
   this.autoReset = false;
   var self = this;
@@ -99,7 +114,7 @@ $(document).ready(function(){
   osc = new Oscillation();
   updater = new AlwaysUpdate();
   osc.size($(window).width(), $(window).height());
-  var gui = new dat.GUI();
+  gui = new dat.GUI();
   gui.remember(osc);
   gui.add(osc, 'hVel', -100, 100).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'vVel', -100, 100).step(0.01).onFinishChange(updater.checkReset);
@@ -110,6 +125,7 @@ $(document).ready(function(){
   gui.add(osc, 'hSweep', -50, 50).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'dt', 0.01, 10).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'clearDrawing');
+  gui.add(osc, 'randomize');
   var drawing = gui.add(osc, 'drawing');
   drawing.onChange(function() {
     osc.toggleDrawing();
