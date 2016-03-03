@@ -15,7 +15,6 @@ var Oscillation = function() {
   this.drawing = true;
 
   this.context = document.getElementById('canvas').getContext('2d');
-  this.context.strokeStyle = '#ff3333';
   var self = this;
   var timer;
   this.draw = function() {
@@ -23,9 +22,11 @@ var Oscillation = function() {
     var y = self.vVel * Math.sin(self.vFreq * self.t + self.vPhase);
 
     self.context.beginPath();
+    self.context.strokeStyle = 'rgba(48,48,48,.5)';
     self.context.moveTo(self.x, self.y);
     self.context.lineTo(x, y);
     self.context.stroke();
+    self.context.closePath();
 
     self.t += self.dt;
     self.x = x || 0;
