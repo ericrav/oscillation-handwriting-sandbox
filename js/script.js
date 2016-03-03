@@ -39,9 +39,9 @@ var Oscillation = function() {
   }
 
   this.clearDrawing = function() {
-    this.context.translate(this.context.canvas.width / -2, this.context.canvas.width / -2);
+    this.context.translate(this.context.canvas.width / -2, this.context.canvas.height / -2);
     this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-    this.context.translate(this.context.canvas.width / 2, this.context.canvas.width / 2);
+    this.context.translate(this.context.canvas.width / 2, this.context.canvas.height / 2);
   }
 
   this.draw();
