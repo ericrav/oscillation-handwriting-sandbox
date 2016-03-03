@@ -61,26 +61,35 @@ var Oscillation = function() {
 }
 
 var osc;
+var AlwaysUpdate = function() {
+  this.autoReset = false;
+  var self = this;
+  this.checkReset = function() {
+    if (self.autoReset) osc.clearDrawing();
+  }
+}
 $(document).ready(function(){
   $('#canvas').width = $(window).width();
   $('#canvas').height = $(window).height();
   osc = new Oscillation();
+  updater = new AlwaysUpdate();
   osc.size($(window).width(), $(window).height());
   var gui = new dat.GUI();
   gui.remember(osc);
-  gui.add(osc, 'hVel', -100, 100).step(0.01);
-  gui.add(osc, 'vVel', -100, 100).step(0.01);
-  gui.add(osc, 'hFreq', -100, 100).step(0.01);
-  gui.add(osc, 'vFreq', -100, 100).step(0.01);
-  gui.add(osc, 'hPhase', -100, 100).step(0.01);
-  gui.add(osc, 'vPhase', -100, 100).step(0.01);
-  gui.add(osc, 'hSweep', $(window).width() / -2, $(window).width() / 2).step(0.01);
-  gui.add(osc, 'dt', 0.01, 10).step(0.01);  
+  gui.add(osc, 'hVel', -100, 100).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'vVel', -100, 100).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'hFreq', -100, 100).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'vFreq', -100, 100).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'hPhase', -100, 100).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'vPhase', -100, 100).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'hSweep', $(window).width() / -2, $(window).width() / 2).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'dt', 0.01, 10).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'clearDrawing');
   var drawing = gui.add(osc, 'drawing');
   drawing.onChange(function() {
     osc.toggleDrawing();
   });
+  gui.add(updater, 'autoReset');
 
 });
 
