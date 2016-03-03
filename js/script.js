@@ -5,8 +5,8 @@ var Oscillation = function() {
   this.vFreq  = .46; // omega y
   this.hPhase = .46; // phi x
   this.vPhase = 20; // phi y
-  this.hSweep = 50; // c
-  this.dt     = 5; // time in ms
+  this.hSweep = 4; // c
+  this.dt     = 1; // time in ms
 
   this.t = 0; // drawing time (not changed by user)
   this.x = 0; // drawing x pos
@@ -24,13 +24,13 @@ var Oscillation = function() {
     self.context.beginPath();
     self.context.strokeStyle = 'rgba(48,48,48,.5)';
     self.context.moveTo(self.x, self.y);
-    self.context.lineTo(x, y);
+    self.context.lineTo(self.x + x, self.y + y);
     self.context.stroke();
     self.context.closePath();
 
     self.t += self.dt;
-    self.x = x || 0;
-    self.y = y || 0;
+    self.x += x;
+    self.y += y;
 
     timer = setTimeout(self.draw, self.dt);
   }
@@ -45,6 +45,8 @@ var Oscillation = function() {
     this.context.translate(this.context.canvas.width / -2, this.context.canvas.height / -2);
     this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     this.context.translate(this.context.canvas.width / 2, this.context.canvas.height / 2);
+    this.x = 0;
+    this.y = 0;
   }
 
   this.toggleDrawing = function() {
@@ -72,7 +74,7 @@ $(document).ready(function(){
   gui.add(osc, 'hPhase', -100, 100).step(0.01);
   gui.add(osc, 'vPhase', -100, 100).step(0.01);
   gui.add(osc, 'hSweep', $(window).width() / -2, $(window).width() / 2).step(0.01);
-  gui.add(osc, 'dt', 1, 1000);  
+  gui.add(osc, 'dt', 0.01, 10).step(0.01);  
   gui.add(osc, 'clearDrawing');
   var drawing = gui.add(osc, 'drawing');
   drawing.onChange(function() {
