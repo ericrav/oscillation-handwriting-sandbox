@@ -82,7 +82,7 @@ $(document).ready(function(){
   gui.add(osc, 'vFreq', -100, 100).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'hPhase', -100, 100).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'vPhase', -100, 100).step(0.01).onFinishChange(updater.checkReset);
-  gui.add(osc, 'hSweep', $(window).width() / -2, $(window).width() / 2).step(0.01).onFinishChange(updater.checkReset);
+  gui.add(osc, 'hSweep', -50, 50).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'dt', 0.01, 10).step(0.01).onFinishChange(updater.checkReset);
   gui.add(osc, 'clearDrawing');
   var drawing = gui.add(osc, 'drawing');
