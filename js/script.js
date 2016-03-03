@@ -1,11 +1,11 @@
 var Oscillation = function() {
-  this.hVel   = 35.9; // a
-  this.vVel   = 62.8; // b
-  this.hFreq  = 22.2; // omega x
-  this.vFreq  = .46; // omega y
+  this.hVel   = 6.2; // a
+  this.vVel   = 36.56; // b
+  this.hFreq  = -100; // omega x
+  this.vFreq  = 100; // omega y
   this.hPhase = .46; // phi x
   this.vPhase = 20; // phi y
-  this.hSweep = 4; // c
+  this.hSweep = 2; // c
   this.dt     = 1; // time in ms
 
   this.t = 0; // drawing time (not changed by user)
