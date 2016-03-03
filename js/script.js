@@ -12,6 +12,8 @@ var Oscillation = function() {
   this.x = 0; // drawing x pos
   this.y = 0; // drawing y pos
 
+  this.drawing = true;
+
   this.context = document.getElementById('canvas').getContext('2d');
   this.context.strokeStyle = '#ff3333';
   var self = this;
@@ -44,7 +46,13 @@ var Oscillation = function() {
     this.context.translate(this.context.canvas.width / 2, this.context.canvas.height / 2);
   }
 
-  this.draw();
+  this.toggleDrawing = function() {
+    if (this.drawing) this.draw();
+    else clearTimeout(timer);
+  }
+
+  this.toggleDrawing();
+
 
 }
 
@@ -64,7 +72,12 @@ $(document).ready(function(){
   gui.add(osc, 'vPhase', -100, 100).step(0.01);
   gui.add(osc, 'hSweep', $(window).width() / -2, $(window).width() / 2).step(0.01);
   gui.add(osc, 'dt', 1, 1000);  
-  gui.add(osc, 'clearDrawing');  
+  gui.add(osc, 'clearDrawing');
+  var drawing = gui.add(osc, 'drawing');
+  drawing.onChange(function() {
+    osc.toggleDrawing();
+  });
+
 });
 
 $(window).resize(function() {
